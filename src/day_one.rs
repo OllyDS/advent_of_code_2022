@@ -1,9 +1,7 @@
-use std::fs;
+use crate::utils::read_file;
 
 pub fn day_one_calc() {
-    // read txt file as string
-    let contents = fs::read_to_string("./src/files/input_day_one.txt")
-        .expect("Should have been able to read the file");
+    let contents = read_file("./src/files/input_day_one.txt".to_string());
 
     let sum = calculate_max_calories(contents);
     println!("{:?}", sum);
