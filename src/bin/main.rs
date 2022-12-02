@@ -1,5 +1,5 @@
-use ::aoc::day_one::day_one_calc;
+use ::aoc::day_two::day_two_calc;
 
 fn main() {
-    day_one_calc();
+    day_two_calc();
 }
