@@ -12,15 +12,15 @@ pub fn calculate_score(path: String) -> i32 {
     let content = read_file(path);
 
     let strategy = HashMap::from([
-        ("AX", 4), // Rock, Rock, 1 + 3
-        ("AY", 8), // Rock, Paper, 2 + 6
-        ("AZ", 3), // Rock, Scissors, 3 + 0
-        ("BX", 1), // Paper, Rock, 1 + 0
-        ("BY", 5), // Paper, Paper, 2 + 3
-        ("BZ", 9), // Paper, Scissors, 3 + 6
-        ("CX", 7), // Scissors, Rock, 1 + 6
-        ("CY", 2), // Scissors, Paper, 2 + 0
-        ("CZ", 6), // Scissors, Scissors, 3 + 3
+        ("AX", 3), // Rock -> Lose, Scissors, 0 + 3
+        ("AY", 4), // Rock -> Draw, Rock, 3 + 1
+        ("AZ", 8), // Rock -> Win, Paper, 6 + 2
+        ("BX", 1), // Paper -> Lose, Rock, 0 + 1
+        ("BY", 5), // Paper -> Draw, Paper, 3 + 2
+        ("BZ", 9), // Paper -> Win, Scissors, 6 + 3
+        ("CX", 2), // Scissors -> Lose, Paper, 0 + 2
+        ("CY", 6), // Scissors -> Draw, Scissors, 3 + 3
+        ("CZ", 7), // Scissors -> Win, Rock, 6 + 1
     ]);
 
     let moves = content.split("\n").collect::<Vec<_>>();
