@@ -1,7 +1,7 @@
 use crate::utils::read_file;
 
 pub fn day_one_calc() {
-    let contents = read_file("./src/files/input_day_one.txt".to_string());
+    let contents = read_file("./src/files/input_day_01.txt".to_string());
 
     let sum = calculate_max_calories(contents);
     println!("{:?}", sum);

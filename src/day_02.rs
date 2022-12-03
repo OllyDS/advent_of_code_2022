@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use crate::utils::read_file;
 
 pub fn day_two_calc() {
-    let path = "./src/files/input_day_two.txt".to_string();
+    let path = "./src/files/input_day_02.txt".to_string();
     let total_score = calculate_score(path);
     println!("{:?}", total_score);
 }
