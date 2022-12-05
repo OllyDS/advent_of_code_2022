@@ -2,10 +2,30 @@ use std::collections::HashMap;
 
 use crate::utils::read_file;
 
-pub fn day_three_calc() {
+pub fn day_three_calc_part_two() {
     let value_lookup: HashMap<String, usize> = create_alphabet_values();
 
-    let contents = read_file("./src/files/test_day_03.txt".to_string());
+    let contents = read_file("./src/files/input_day_03.txt".to_string());
+    let split_contents = contents.split("\n").into_iter().collect::<Vec<&str>>();
+    let chunks = split_contents.chunks(3);
+
+    let res = chunks.into_iter().map(|chunk| {
+        for line in chunk[0].chars() {
+            if chunk[1].contains(line) && chunk[2].contains(line) {
+                return value_lookup.get(&line.to_string()).unwrap().clone();
+            }
+        }
+        return 0;
+    }).sum::<usize>();
+
+    println!("{}", res);
+
+}
+
+pub fn day_three_calc_part_one() {
+    let value_lookup: HashMap<String, usize> = create_alphabet_values();
+
+    let contents = read_file("./src/files/input_day_03.txt".to_string());
 
     let sum_total = calculate_priority_values(contents, value_lookup);
 
