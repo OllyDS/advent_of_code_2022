@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use aoc::day_03::{create_alphabet_values,calculate_priority_values};
-use aoc::utils::read_file;
+use aoc::day_03::{calculate_priority_values};
+use aoc::utils::{create_alphabet_values, read_file};
 
 #[test]
 fn test_calculate_priority_values() {
