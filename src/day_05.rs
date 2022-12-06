@@ -21,20 +21,24 @@ pub fn day_five_part_one() {
 
     let re_ordered_crates: HashMap<i32, Vec<String>> = reorder_crates_from_instructions(instructions, horizontal_table);
     
-    let top_crates: Vec<String> = re_ordered_crates
-        .into_iter()
-        // sort by crate number
-        .sorted_by_key(|entry| entry.0)
-        .map(|map| map.1.first().unwrap().clone())
-        .collect();
-    
-    let result = top_crates
-        .into_iter()
-        .map(|c| c.split(['[',']']).collect::<String>())
-        .collect::<String>();
+    let result = fetch_top_n_crates(re_ordered_crates);
     
     println!("commands: {:?}", result);
+}
 
+pub fn day_five_part_two() {
+    let contents = read_file("./src/files/input_day_05.txt".to_string());
+    let (table, commands) = split_content(contents);
+
+    let horizontal_table: HashMap<i32, Vec<String>> = convert_to_horizontal_table(table);
+
+    let instructions: Vec<Commands> = convert_commands_to_succinct_struct(commands);
+
+    let re_ordered_crates: HashMap<i32, Vec<String>> = reorder_crates_crane_9001(instructions, horizontal_table);
+    
+    let result = fetch_top_n_crates(re_ordered_crates);
+    
+    println!("commands: {:?}", result);
 }
 
 /// will split the table from the commands into a tuple of str for easier handling
@@ -115,6 +119,46 @@ pub fn reorder_crates_from_instructions(instructions:  Vec<Commands>, mut hash_t
             hash_table.get_mut(&cmd._to).unwrap().insert(0, _crate.clone());
             i += 1;
         }
+    });
+
+    return hash_table;
+}
+
+pub fn fetch_top_n_crates(ordered_crates: HashMap<i32, Vec<String>>) -> String{
+    let top_crates: Vec<String> = ordered_crates
+        .into_iter()
+        // sort by crate number
+        .sorted_by_key(|entry| entry.0)
+        .map(|map| map.1.first().unwrap().clone())
+        .collect();
+    
+    top_crates
+        .into_iter()
+        .map(|c| c.split(['[',']']).collect::<String>())
+        .collect::<String>()
+}
+
+pub fn reorder_crates_crane_9001(instructions:  Vec<Commands>, mut hash_table: HashMap<i32, Vec<String>>) -> HashMap<i32, Vec<String>> {
+    // re-organise crates according to the commands
+    instructions.into_iter().for_each(|cmd| {
+        let mut crate_collection: Vec<String> = Vec::new();
+        let mut i = 0;
+        while i < cmd._move {
+            // fetch the top crate from the stack (first element) and remove it
+            let _crate = hash_table.get_mut(&cmd._from).unwrap().remove(0);
+            // add to the collection
+            crate_collection.push(_crate);
+            i += 1;
+        }
+
+        let existing_crates = hash_table.get(&cmd._to).unwrap();
+        // update the values by chaining the two vectors
+        *hash_table
+            .get_mut(&cmd._to)
+            .unwrap() = crate_collection
+                .iter().cloned()
+                .chain(existing_crates.iter().cloned())
+                .collect_vec();
     });
 
     return hash_table;
