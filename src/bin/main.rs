@@ -1,5 +1,5 @@
-use ::aoc::day_05::{day_five_part_two};
+use ::aoc::day_06::{day_six_part_one};
 
 fn main() {
-    day_five_part_two();
+    day_six_part_one();
 }
